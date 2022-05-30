@@ -4,27 +4,10 @@ import datetime
 import fileinput
 import re
 import sys
-#import psycopg2 as pg
 import pytz
 
 UTC = pytz.utc
 
-#db = 'moffett_pandora'
-#dbuser = 'steve'
-#dbpass = 'frub*jub'
-#dbhost = 'localhost'
-#try:
-#        connection = pg.connect(dbname=db, user=dbuser, password=dbpass, host=dbhost)
-#except:
-#        print("Can't connect to the database")
-#        raise
-
-#cur = connection.cursor()
-#cur.execute("set timezone to utc")
-#connection.commit()
-
-# the table that we put the data into
-#table = sys.argv[2]
 
 p = re.compile(r"""^
         (?P<day>\d{2}):
@@ -47,7 +30,6 @@ for line in fileinput.input(sys.argv[1]):
     m = p.match(line)
 
     if m:
-        #sys.stderr.write(f"match {m.group('AOD440')}\n")
         try:
             if (m.group('fmf') == '-999.000000'):
                 # nothing worth looking at here!
@@ -71,8 +53,3 @@ for line in fileinput.input(sys.argv[1]):
         # we cheat here by making the dates of all the data the same
         outstring = f"2020-01-01T{time:%H:%M:%S} {tau_f} {tau_c} {fmf}" 
         print(outstring)
-        #cur.execute(sql)
-
-
-#connection.commit()
-#connection.close()
